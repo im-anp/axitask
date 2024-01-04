@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { ButtonColor, LastClicked } from "./App.types";
+import { Card, CardWrapper, StyledButton } from "./styles";
 
 const App: React.FC = () => {
-  const [lastClicked, setLastClicked] = useState<Date | undefined>(undefined);
-  const [buttonColor, setButtonColor] = useState<"red" | "blue" | "green">("red");
+  const [lastClicked, setLastClicked] = useState<LastClicked>(undefined);
+  const [buttonColor, setButtonColor] = useState<ButtonColor>("red");
 
   const onClick = () => {
     setLastClicked(new Date());
     setButtonColor(getNextButtonColor());
   };
 
-  const getNextButtonColor = (): "red" | "blue" | "green" => {
+  const getNextButtonColor = (): ButtonColor => {
     switch (buttonColor) {
       case "red":
         return "blue";
@@ -23,16 +25,18 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <button onClick={onClick} style={{ backgroundColor: buttonColor }}>
-        Click
-      </button>
-      <p>
-        Last clicked:{" "}
-        {lastClicked !== undefined ? lastClicked.toString() : "Never"}
-      </p>
-    </div>
+    <CardWrapper>
+      <Card>
+        <StyledButton onClick={onClick} color={buttonColor}>
+          Click
+        </StyledButton>
+        <p>
+          Last clicked:{" "}
+          {lastClicked !== undefined ? lastClicked.toString() : "Never"}
+        </p>
+      </Card>
+    </CardWrapper>
   );
-}
+};
 
 export default App;
